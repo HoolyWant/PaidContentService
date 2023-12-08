@@ -2,9 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-c
-
-
 class User(AbstractUser):
     username = None
     phone_number = models.CharField(unique=True, verbose_name='номер телефона')

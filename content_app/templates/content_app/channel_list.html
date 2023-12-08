@@ -1,0 +1,78 @@
+{% extends 'content_app/base.html'%}
+
+{% block content %}
+
+  <section class="py-5 text-center container">
+    <div class="row py-lg-12">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Пример альбома</h1>
+        <p class="lead text-muted">Что-то краткое и ведущее о коллекции ниже - ее содержание, создатель и т.д. Сделайте ее короткой и интересной, но не слишком короткой, чтобы люди просто не пропустили ее полностью.</p>
+        <p>
+          <a href="#" class="btn btn-outline-success btn-lg">Создать канал</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+          <div class="card shadow-sm">
+            {% for object in object_list %}
+                <div class="card" style="width: 18rem;">
+                  <img src="/media/{{ object.image }}" class="card-img-top" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ object.title }}</h5>
+                    <p class="card-text">{{ object.description }}</p>
+                    <div class="btn-group">
+                  <button type="button" class="btn btn-secondary">Dropdown</button>
+                  <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                    <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#!">Action</a>
+                    <a class="dropdown-item" href="#!">Another action</a>
+                    <a class="dropdown-item" href="#!">Another action</a>
+                    </div>
+                </div>
+                {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="text-muted py-5">
+  <div class="container">
+    <p class="float-end mb-1">
+      <a href="#">Вернуться наверх</a>
+    </p>
+    <p class="mb-1">Пример альбома &copy; Bootstrap, но, пожалуйста, скачайте и настройте его под себя!</p>
+    <p class="mb-0">Новое в Bootstrap? <a href="/">Посетите домашнюю страницу</a> или прочтите наше <a href="/docs/5.0/getting-started/introduction/">руководство по началу работы</a>.</p>
+  </div>
+</footer>
+</body>
+
+
+<!- <div class="col-12">
+        <div class="container">
+            <div class="col-3 mb-5">
+                <a class="p-2 btn btn-primary" href='{% url "content_app:channel_create" %}'>Создать канал</a>
+            </div>
+                {% for object in object_list %}
+                <div class="card" style="width: 18rem;">
+                  <img src="/media/{{ object.image }}" class="card-img-top" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ object.title }}</h5>
+                    <p class="card-text">{{ object.description }}</p>
+                    <a href="{% url 'content_app:channel_view' object.id %}" class="btn btn-primary stretched-link">Посмотреть</a>
+                  </div>
+                </div>
+                {% endfor %}
+        </div>
+    </div>->
+{% endblock %}

@@ -7,12 +7,12 @@ NULLABLE = {'blank': True, 'null': True}
 class Channel(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='владелец', **NULLABLE)
     title = models.CharField(max_length=150, verbose_name='название')
-    description = models.CharField()
+    description = models.TextField(verbose_name='описание')
     image = models.ImageField(upload_to='channels/', verbose_name='изображение', **NULLABLE)
     made_at = models.DateTimeField()
     subscribers = models.IntegerField()
     cost = models.PositiveIntegerField(default=0, verbose_name='сумма оплаты', **NULLABLE)
-    publications_count = ...
+    publications_count = models.PositiveIntegerField(default=0, verbose_name='кол-во публикаций', **NULLABLE)
 
 
 class Publication(models.Model):
