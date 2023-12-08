@@ -20,6 +20,10 @@ class ChannelList(ListView):
 class ChannelCreate(CreateView):
     model = Channel
 
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.owner_id = self.request.user
+
 
 class ChannelView(DetailView):
     model = Channel
