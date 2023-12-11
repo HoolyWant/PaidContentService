@@ -1,38 +1,158 @@
-{% extends 'mail/base.html'%}
+{% extends 'content_app/base.html'%}
 
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">LehaMailling</h1>
-    <p class="lead">Рассылки</p>
-</div>
-
-<div class="col-12">
-        <div class="container">
-            <div class="col-3 mb-5">
-                {% if not user.is_staff %}
-                <a class="p-2 btn btn-primary" href='{% url "content_app:channel_create" %}'>Создать канал</a>
-                {% endif %}
-                <a class="p-2 btn btn-primary" href='{% url "mail:logs_list" %}'>Посмотреть логи</a>
-            </div>
-            <div class="row text-center">
-                {% for object in object_list %}
-                    {% if object.user_id == user.id %}
-                        <div class="col-3">
-                            <div class="card mb-4 box-shadow">
-                                <div class="card-body">
-                                    <h4 class="card-title pricing-card-title">{{ object.message }}</h4>
-                                        <p class="lead">{{ object.distribution_status }}</p>
-                                        <a class="p-2 btn btn-outline-primary" href='{% url "mail:mailling_detail" object.id %}'>Инфо</a>
-                                        {% if not user.is_staff %}
-                                        <a class="p-2 btn btn-outline-primary" href='{% url "mail:mailling_edit" object.id %}'>Изменить</a>
-                                        <a class="p-2 btn btn-outline-danger" href='{% url "mail:mailling_delete" object.id %}'>Удалить</a>
-                                        {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
+<main>
+  <div class="row gy-5">
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+
+        <div class="container">
+          <div class="carousel-caption text-start">
+            <h1>Пример заголовка.</h1>
+            <p>Некоторое репрезентативное содержимое-заполнитель для первого слайда карусели.</p>
+            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Другой пример заголовка.</h1>
+            <p>Некоторое репрезентативное содержимое-заполнитель для второго слайда карусели.</p>
+            <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+
+        <div class="container">
+          <div class="carousel-caption text-end">
+            <h1>Еще один для хорошей меры.</h1>
+            <p>Некоторые репрезентативные материалы-заполнители для третьего слайда этой карусели.</p>
+            <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Предыдущий</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Следующий</span>
+    </button>
+  </div>
+    </div>
+  <div class="row gy-5">
+  <div class="d-grid gap-2 col-1 mx-auto">
+    <a href="#" class="btn btn-outline-success btn-lg">Получить Plus</a>
+  </div>
+    </div>
+    </div>
+  <!-- Маркетинговые сообщения и короткометражки
+  ================================================== -->
+  <!-- Оберните остальную часть страницы в другой контейнер, чтобы центрировать все содержимое. -->
+
+  <div class="container marketing">
+
+    <!-- Три столбца текста под каруселью -->
+    <div class="row">
+    <div class="row">
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+
+        <h2>Заголовок</h2>
+        <p>Некоторый типичный заполнитель для трех столбцов текста под каруселью. Это первая колонка.</p>
+        <p><a class="btn btn-secondary" href="#">Посмотреть детали &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+
+        <h2>Заголовок</h2>
+        <p>Еще одна захватывающая часть репрезентативного содержимого-заполнителя. На этот раз мы перешли ко второй колонке.</p>
+        <p><a class="btn btn-secondary" href="#">Посмотреть детали &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+
+        <h2>Заголовок</h2>
+        <p>И, наконец, третий столбец репрезентативного содержимого заполнителя.</p>
+        <p><a class="btn btn-secondary" href="#">Посмотреть детали &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+    <!-- START ОСОБЕННОСТИ -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">Заголовок первой короткометражки. <span class="text-muted">Это взорвет твой разум.</span></h2>
+        <p class="lead">Здесь есть отличный заполнитель для первой короткометражки. Представьте себе какую-нибудь увлекательную прозу.</p>
+      </div>
+      <div class="col-md-5">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading">Ах да, это так хорошо. <span class="text-muted">Убедитесь сами.</span></h2>
+        <p class="lead">Еще одна короткометражка? Конечно. Здесь больше содержимого-заполнителя, чтобы дать вам представление о том, как этот макет будет работать с некоторым реальным контентом из реального мира.</p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">И, наконец, этот. <span class="text-muted">Шах и мат.</span></h2>
+        <p class="lead">И да, это последний блок репрезентативного содержимого заполнителя. Опять же, на самом деле не предназначено для чтения, просто здесь, чтобы дать вам лучшее представление о том, как это будет выглядеть с некоторым фактическим содержанием. Ваш контент.</p>
+      </div>
+      <div class="col-md-5">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- /END ОСОБЕННОСТИ -->
+
+  </div><!-- /.container -->
+
+
+  <!-- ФУТЕР -->
+  <footer class="container">
+    <p class="float-end"><a href="#">Вернуться наверх</a></p>
+    <p>&copy; 2017–2021 Компания, Инк. &middot; <a href="#">Конфиденциальность</a> &middot; <a href="#">Условия</a></p>
+  </footer>
+</main>
+
+
+    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+
+  </body>
+</html>
+
 {% endblock %}

@@ -11,7 +11,6 @@ class Channel(models.Model):
     image = models.ImageField(upload_to='channels/', verbose_name='изображение', **NULLABLE)
     made_at = models.DateTimeField()
     subscribers = models.IntegerField()
-    cost = models.PositiveIntegerField(default=0, verbose_name='сумма оплаты', **NULLABLE)
     publications_count = models.PositiveIntegerField(default=0, verbose_name='кол-во публикаций', **NULLABLE)
 
 
@@ -22,7 +21,7 @@ class Publication(models.Model):
     image = models.ImageField(upload_to='publications/', verbose_name='изображение', **NULLABLE)
     is_free = models.BooleanField()
     made_at = models.DateTimeField()
-    views_count = models.PositiveIntegerField(default=0, verbose_name='сумма оплаты', **NULLABLE)
+    views_count = models.PositiveIntegerField(default=0, verbose_name='кол-во просмотров', **NULLABLE)
 
 
 class Subscription(models.Model):

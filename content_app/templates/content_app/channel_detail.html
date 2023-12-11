@@ -2,44 +2,53 @@
 
 {% block content %}
 
-<main>
-
   <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">{{ object.title }}</h1>
+          <img src="/media/{{ object.image }}" class="bd-placeholder-img rounded-circle" alt="Card image cap" width="140" height="140">
         <p class="lead text-muted">{{ object.description }}</p>
-        <p>
-          <a href="#" class="btn btn-primary my-2">Подписаться за {{ object.cost }}р</a>
-          <a href="#" class="btn btn-secondary my-2">Следить за бесплатными публикациями</a>
-        </p>
+          {% if not subscription %}
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-sm btn-primary btn-follow" value="Подписаться на канал" name="button">
+                </form>
+          {% elif subscription %}
+            <form method="post">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-sm btn-primary btn-follow" value="Отписаться от канала" name="button">
+            </form>
+          {% endif %}
       </div>
     </div>
   </section>
 
   <div class="album py-5 bg-light">
     <div class="container">
-
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div class="col">
-          <div class="card shadow-sm">
+      <h1 class="fw-light">Лента</h1>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for publication in publications %}
-                <div class="card" style="width: 18rem;">
-                  <img src="/media/{{ publication.image }}" class="card-img-top" alt="Card image cap">
-                  <div class="card-body">
-                    <h5 class="card-title">{{ publication.title }}</h5>
-                    <p class="card-text">{{ publication.description }}</p>
-                    <a href="#" class="btn btn-primary stretched-link">Посмотреть</a>
-                  </div>
+                <div class="col-3">
+                <div class="card" style="width: 50rem;">
+                    <div class="card-body">
+                    <h2>
+                        <a class="nav-link" href="{% url 'content_app:publication_detail'%}"> {{ publication.title }}</a>
+                    </h2>
+                    <p class="card-text"> {{ publication.content }}</p>
+                    {% if publication.image%}
+                        <img src="/media/{{ publication.image }}" class="card-img-top" alt="Card image cap">
+                    {% endif %}
+                    <div class="card-footer">
+                        {{ publication.made_at }}
+                    </div>
                 </div>
-                {% endfor %}
-          </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-      </div>
-    </div>
-  </div>
+        </div>
 
-</main>
 
 <footer class="text-muted py-5">
   <div class="container">
