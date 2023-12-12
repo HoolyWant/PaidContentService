@@ -9,9 +9,7 @@ class Channel(models.Model):
     title = models.CharField(max_length=150, verbose_name='название')
     description = models.TextField(verbose_name='описание')
     image = models.ImageField(upload_to='channels/', verbose_name='изображение', **NULLABLE)
-    made_at = models.DateTimeField()
-    subscribers = models.IntegerField()
-    publications_count = models.PositiveIntegerField(default=0, verbose_name='кол-во публикаций', **NULLABLE)
+    made_at = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
 
 
 class Publication(models.Model):
@@ -19,7 +17,6 @@ class Publication(models.Model):
     title = models.CharField()
     content = models.TextField()
     image = models.ImageField(upload_to='publications/', verbose_name='изображение', **NULLABLE)
-    is_free = models.BooleanField()
     made_at = models.DateTimeField()
     views_count = models.IntegerField(default=0, verbose_name='кол-во просмотров', **NULLABLE)
 
