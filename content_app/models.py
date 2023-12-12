@@ -37,9 +37,9 @@ class Subscription(models.Model):
 class Payment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='пользователь', **NULLABLE)
     payment_date = models.DateTimeField(auto_now_add=True, verbose_name='дата оплаты')
-    channel = models.ForeignKey(Channel,  on_delete=models.CASCADE, verbose_name='курс', **NULLABLE)
-    amount = models.PositiveIntegerField(default=0, verbose_name='сумма оплаты', **NULLABLE)
-    link = models.CharField(max_length=500, verbose_name='ссылка', **NULLABLE)
+    amount = models.PositiveIntegerField(default=200, verbose_name='сумма оплаты', **NULLABLE)
+    success = models.BooleanField(default=False, verbose_name='статус оплаты')
+    session_id = models.CharField(max_length=150, verbose_name='номер операции', **NULLABLE)
 
     class Meta:
         verbose_name = 'оплата'
