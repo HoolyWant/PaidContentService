@@ -5,7 +5,6 @@ from django.db import models
 class User(AbstractUser):
     username = None
     phone_number = models.CharField(unique=True, verbose_name='номер телефона')
-    is_subscribed = models.BooleanField(default=True, verbose_name='по')
 
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = []

@@ -32,14 +32,15 @@
                 <div class="card" style="width: 50rem;">
                     <div class="card-body">
                     <h2>
-                        <a class="nav-link" href="{% url 'content_app:publication_detail'%}"> {{ publication.title }}</a>
+                        <a class="nav-link" href="{% url 'content_app:publication_detail' publication.id %}"> {{ publication.title }}</a>
                     </h2>
                     <p class="card-text"> {{ publication.content }}</p>
-                    {% if publication.image%}
+                    {% if publication.image %}
                         <img src="/media/{{ publication.image }}" class="card-img-top" alt="Card image cap">
                     {% endif %}
                     <div class="card-footer">
                         {{ publication.made_at }}
+                        <h6>Просмотры: {{ publication.views_count }}</h6>
                     </div>
                 </div>
                         </div>
@@ -48,35 +49,4 @@
             {% endfor %}
         </div>
         </div>
-
-
-<footer class="text-muted py-5">
-  <div class="container">
-    <p class="float-end mb-1">
-      <a href="#">Вернуться наверх</a>
-    </p>
-    <p class="mb-1">Пример альбома &copy; Bootstrap, но, пожалуйста, скачайте и настройте его под себя!</p>
-    <p class="mb-0">Новое в Bootstrap? <a href="/">Посетите домашнюю страницу</a> или прочтите наше <a href="/docs/5.0/getting-started/introduction/">руководство по началу работы</a>.</p>
-  </div>
-</footer>
-
-
-
-<!- <div class="col-12">
-        <div class="container">
-            <div class="col-3 mb-5">
-                <a class="p-2 btn btn-primary" href='{% url "content_app:channel_create" %}'>Создать канал</a>
-            </div>
-                {% for object in object_list %}
-                <div class="card" style="width: 18rem;">
-                  <img src="/media/{{ object.image }}" class="card-img-top" alt="Card image cap">
-                  <div class="card-body">
-                    <h5 class="card-title">{{ object.title }}</h5>
-                    <p class="card-text">{{ object.description }}</p>
-                    <a href="{% url 'content_app:channel_view' object.id %}" class="btn btn-primary stretched-link">Посмотреть</a>
-                  </div>
-                </div>
-                {% endfor %}
-        </div>
-    </div>->
 {% endblock %}

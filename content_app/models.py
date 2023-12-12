@@ -21,7 +21,7 @@ class Publication(models.Model):
     image = models.ImageField(upload_to='publications/', verbose_name='изображение', **NULLABLE)
     is_free = models.BooleanField()
     made_at = models.DateTimeField()
-    views_count = models.PositiveIntegerField(default=0, verbose_name='кол-во просмотров', **NULLABLE)
+    views_count = models.IntegerField(default=0, verbose_name='кол-во просмотров', **NULLABLE)
 
 
 class Subscription(models.Model):

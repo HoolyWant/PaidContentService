@@ -11,7 +11,7 @@
         <h1 class="fw-light">Каналы</h1>
         <p class="lead text-muted"> Здесь вы можете найти интересные для вас каналы с бесплатным и платным контентом. Платный контент доступен только для пользователеq с подпиской Plus</p>
         <p>
-          <a href="#" class="btn btn-outline-success btn-lg">Создать канал</a>
+          <a href="{% url 'content_app:channel_create' %}" class="btn btn-outline-success btn-lg">Создать канал</a>
         </p>
       </div>
     </div>
@@ -26,20 +26,12 @@
             {% for object in object_list %}
                   <img src="/media/{{ object.image }}" class="card-img-top" alt="Card image cap">
                   <div class="card-body">
-                    <h5 class="card-title">{{ object.title }}</h5>
+                    <h5 class="card-title">
+                      <a class="nav-link my-0 mr-md-auto font-weight-normal" href="{% url 'content_app:channel_view' object.id%}" >
+                        {{ object.title }}
+                      </a>
+                    </h5>
                     <p class="card-text">{{ object.description }}</p>
-                      <div class="dropdown open">
-                          <button class="btn btn-secondary dropdown-toggle"
-                                  type="button" id="dropdownMenu5" data-toggle="dropdown"
-                                  aria-haspopup="true" aria-expanded="false">
-                            Тыкай сюда
-                          </button>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'content_app:channel_view' object.id%} ">Открыть</a>
-                            <a class="dropdown-item" href="%">Следить за каналом</a>
-                            <a class="dropdown-item disabled" href="#!">Перестать следить</a>
-                          </div>
-                        </div>
             {% endfor %}
           </div>
         </div>

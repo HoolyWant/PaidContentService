@@ -1,13 +1,22 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, request
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView
 
+from content_app.forms import ChannelForm
 from content_app.models import Publication, Channel, Subscription
 
 
 class PublicationView(LoginRequiredMixin, DetailView):
     model = Publication
+
+    def get(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            self.object = self.get_object()
+            self.object.views_count += 1
+            self.object.save()
+            context = self.get_context_data(object=self.object)
+            return self.render_to_response(context)
 
 
 class PublicationCreate(LoginRequiredMixin, CreateView):
@@ -26,6 +35,7 @@ class ChannelList(ListView):
 
 class ChannelCreate(CreateView):
     model = Channel
+    form_class = ChannelForm
 
     def form_valid(self, form):
         self.object = form.save()
@@ -39,7 +49,7 @@ class ChannelView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ChannelView, self).get_context_data(**kwargs)
-        if self.request.user.is_subscribed or self.request.user.is_staff:
+        if self.request.user.is_active or self.request.user.is_staff:
             context['publications'] = Publication.objects.filter(channel_id=self.get_object().id)
         else:
             context['publications'] = Publication.objects.filter(

@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -14,3 +15,8 @@ class RegisterView(CreateView):
     def get_success_url(self):
         return reverse_lazy('content_app:home')
 
+
+# class Login(LoginView):
+#     model = User
+#     form_class =UserLoginForm
+#     template_name = 'users/login.html'

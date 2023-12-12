@@ -13,7 +13,7 @@ class StyleFormMixin:
 class ChannelForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Channel
-        fields = ('title', 'description', 'image', 'cost')
+        fields = ('title', 'description', 'image',)
 
 
 class PublicationForm(StyleFormMixin, forms.ModelForm):
