@@ -1,0 +1,54 @@
+{% extends 'content_app/base.html'%}
+
+{% block content %}
+
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">{{ object.title }}</h1>
+          <img src="/media/{{ object.image }}" class="bd-placeholder-img rounded-circle" alt="Card image cap" width="140" height="140">
+        <p class="lead text-muted">{{ object.description }}</p>
+          <p class="lead text-muted">Подписчики: {{ followers }}</p>
+          <p class="lead text-muted">Публикации: {{ publications_count }}</p>
+          {% if not subscription %}
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-sm btn-primary btn-follow" value="Подписаться на канал" name="button">
+                </form>
+          {% elif subscription %}
+            <form method="post">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-sm btn-primary btn-follow" value="Отписаться от канала" name="button">
+            </form>
+          {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <h1 class="fw-light">Лента</h1>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for publication in publications %}
+                <div class="col-3">
+                <div class="card" style="width: 50rem;">
+                    <div class="card-body">
+                    <h2>
+                        <a class="nav-link" href="{% url 'content_app:publication_detail' publication.id %}"> {{ publication.title }}</a>
+                    </h2>
+                    <p class="card-text"> {{ publication.content }}</p>
+                    {% if publication.image %}
+                        <img src="/media/{{ publication.image }}" class="card-img-top" alt="Card image cap">
+                    {% endif %}
+                    <div class="card-footer">
+                        {{ publication.made_at }}
+                        <h6>Просмотры: {{ publication.views_count }}</h6>
+                    </div>
+                </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+{% endblock %}

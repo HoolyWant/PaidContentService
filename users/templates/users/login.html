@@ -1,0 +1,22 @@
+{% extends 'content_app/base.html'%}
+
+{% block content %}
+<main class="form-signin">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-3">
+        </div>
+      <div class="col-3">
+        <form method="post" >
+                            <h2> Вход </h2>
+                             {% csrf_token %}
+                             {{ form.as_p }}
+                             <button type="submit" style="btn btn-primary">
+                                 Войти
+                             </button>
+         </form>
+      </div>
+      </div>
+  </div>
+</main>
+{% endblock %}
