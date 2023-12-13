@@ -80,10 +80,10 @@ if CACHE_ENABLED:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('NAME_DB'),
+        'NAME': os.getenv('POSTGRES_DB'),
         'HOST': 'localhost',
         'USER': 'postgres',
-        'PASSWORD': os.getenv('PASSWORD_DB'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
     }
 }
 
