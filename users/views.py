@@ -48,8 +48,10 @@ class RegisterView(CreateView):
 
 class SuccessView(TemplateView):
     template_name = 'users/success.html'
-    def post(self):
 
+    def post(self, request):
+        phone_number = request.POST.get
+        user = User.objects.get(phone_number=phone_number)
         session_id = Payment.objects.get(user_id=user.id).session_id
         session = stripe.checkout.Session.retrieve(
                 session_id,
@@ -60,10 +62,9 @@ class SuccessView(TemplateView):
             payment = Payment.objects.get(user=user)
             payment.success = True
             payment.save()
-            login(self.request, form.get_user())
             return HttpResponseRedirect(self.get_success_url())
         else:
-            return redirect('/')
+            return reverse_lazy('users:cancel')
 
     def get_success_url(self):
         return reverse_lazy('content_app:home')

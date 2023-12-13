@@ -9,7 +9,7 @@ class Channel(models.Model):
     title = models.CharField(max_length=150, verbose_name='название')
     description = models.TextField(verbose_name='описание')
     image = models.ImageField(upload_to='channels/', verbose_name='изображение', **NULLABLE)
-    made_at = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
+    made_at = models.DateTimeField(auto_now_add=True, verbose_name='дата создания', **NULLABLE)
 
 
 class Publication(models.Model):
