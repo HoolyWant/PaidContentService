@@ -13,6 +13,4 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('success/', SuccessView.as_view(template_name='users/success.html'), name='success')
-    # path('change_password/', ChangePassword.as_view(), name='change_password'),
-    # path('error_password_change/', ErrorPasswordChange.as_view(), name='error_password_change')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -40,13 +40,13 @@ class PublicationCreate(LoginRequiredMixin, CreateView):
         return reverse_lazy('content_app:channel_list')
 
 
-class PublicationEdit(UpdateView):
+class PublicationEdit(LoginRequiredMixin, UpdateView):
     model = Publication
     form_class = PublicationForm
     success_url = reverse_lazy('content_app:channel_list')
 
 
-class PublicationDelete(DeleteView):
+class PublicationDelete(LoginRequiredMixin, DeleteView):
     model = Publication
     success_url = reverse_lazy('content_app:channel_list')
 
@@ -64,7 +64,7 @@ class ChannelList(ListView):
             return self.render_to_response(context)
 
 
-class SubChannelList(ListView):
+class SubChannelList(LoginRequiredMixin, ListView):
     model = Channel
 
     def get_queryset(self):
@@ -76,7 +76,7 @@ class SubChannelList(ListView):
         return queryset
 
 
-class ChannelCreate(CreateView):
+class ChannelCreate(LoginRequiredMixin, CreateView):
     model = Channel
     form_class = ChannelForm
     success_url = reverse_lazy('content_app:channel_list')
@@ -135,11 +135,6 @@ class ChannelView(DetailView):
         return render(request, context)
 
 
-def sub_success(request):
-    if request.method == 'GET':
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-
 def home(request):
     channels = Channel.objects.order_by('?')[:3]
     publications = Publication.objects.filter(is_free=True).order_by('?')[:3]
@@ -148,5 +143,6 @@ def home(request):
         'publications': publications
     }
     return render(request, 'content_app/home.html', context)
+
 
 
