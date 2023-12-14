@@ -32,6 +32,7 @@ python manage.py migrate
     CACHE_ENABLED='True'
     STRIPE_API_KEY='stripe_api_key'
     YOUR_DOMAIN="your_domain"
+    TIME_ZONE='Zone/CityCenter'
 
 '''
 

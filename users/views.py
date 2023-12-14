@@ -27,6 +27,7 @@ class RegisterView(CreateView):
     def form_valid(self, form):
         product = create_product('ContentPlus')
         price = create_price(product, 200)
+        self.object = form.save()
         session = stripe.checkout.Session.create(
             line_items=[
                 {
@@ -35,13 +36,13 @@ class RegisterView(CreateView):
                 },
             ],
             metadata={
-                "user_id": form.instance.id
+                "user_id": self.object.id
             },
             mode="subscription",
             success_url=os.getenv('YOUR_DOMAIN') + '/users/success/',
             cancel_url=os.getenv('YOUR_DOMAIN') + '/users/cancel/',
         )
-        Payment.objects.create(user_id=form.instance.id, session_id=session['id'])
+        Payment.objects.create(user_id=self.object.id, session_id=session['id'])
         form.save()
         return redirect(session['url'])
 
@@ -50,21 +51,24 @@ class SuccessView(TemplateView):
     template_name = 'users/success.html'
 
     def post(self, request):
-        phone_number = request.POST.get
-        user = User.objects.get(phone_number=phone_number)
-        session_id = Payment.objects.get(user_id=user.id).session_id
-        session = stripe.checkout.Session.retrieve(
-                session_id,
-            )
-        if session['payment_status']:
-            user.is_active = True
-            user.save()
-            payment = Payment.objects.get(user=user)
-            payment.success = True
-            payment.save()
-            return HttpResponseRedirect(self.get_success_url())
-        else:
-            return reverse_lazy('users:cancel')
+        try:
+            phone_number = request.POST.get('number_phone')
+            user = User.objects.get(phone_number=phone_number)
+            session_id = Payment.objects.get(user_id=user.id).session_id
+            session = stripe.checkout.Session.retrieve(
+                    session_id,
+                )
+            if session['payment_status']:
+                user.is_active = True
+                user.save()
+                payment = Payment.objects.get(user=user)
+                payment.success = True
+                payment.save()
+                return HttpResponseRedirect(self.get_success_url())
+            else:
+                return reverse_lazy('users:cancel')
+        except KeyError:
+            return redirect('content_app:home')
 
     def get_success_url(self):
         return reverse_lazy('content_app:home')
