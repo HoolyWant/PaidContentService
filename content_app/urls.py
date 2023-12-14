@@ -1,8 +1,8 @@
 from django.urls import path
 
 from content_app.apps import ContentAppConfig
-from content_app.views import ChannelView, ChannelList, home, ChannelCreate,  \
-    PublicationView, SubChannelList, PublicationCreate, PublicationEdit, PublicationDelete
+from content_app.views import ChannelView, ChannelList, home, ChannelCreate, \
+    PublicationView, SubChannelList, PublicationCreate, PublicationEdit, PublicationDelete, ChannelEdit
 
 app_name = ContentAppConfig.name
 
@@ -16,4 +16,5 @@ urlpatterns = [
     path('publication/create/', PublicationCreate.as_view(), name='publication_create'),
     path('publication/edit/<int:pk>', PublicationEdit.as_view(), name='publication_edit'),
     path('publication/delete/<int:pk>', PublicationDelete.as_view(), name='publication_delete'),
+    path('channels/edit/<int:pk>', ChannelEdit.as_view(), name='channel_edit'),
 ]

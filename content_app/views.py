@@ -24,6 +24,12 @@ class PublicationView(DetailView):
         return self.object
 
 
+class ChannelEdit(LoginRequiredMixin, UpdateView):
+    model = Channel
+    form_class = ChannelForm
+    success_url = reverse_lazy('content_app:channel_list')
+
+
 class PublicationCreate(LoginRequiredMixin, CreateView):
     model = Publication
     form_class = PublicationForm

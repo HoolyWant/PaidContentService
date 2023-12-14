@@ -1,17 +1,14 @@
 import os
 
 import stripe
-from django.contrib.auth import get_user_model, login
-from django.contrib.auth.views import LoginView
-from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views import View
-from django.views.generic import CreateView, TemplateView, DetailView
+from django.views.generic import CreateView, TemplateView
 
 from content_app.models import Payment
-from content_app.services import create_product, create_price, create_session
-from users.forms import UserRegisterForm, UserLoginForm
+from content_app.services import create_product, create_price
+from users.forms import UserRegisterForm
 from users.models import User
 
 stripe.api_key = os.getenv('STRIPE_API_KEY')
@@ -53,7 +50,10 @@ class SuccessView(TemplateView):
     def post(self, request):
         try:
             phone_number = request.POST.get('number_phone')
-            user = User.objects.get(phone_number=phone_number)
+            try:
+                user = User.objects.get(phone_number=phone_number)
+            except Exception:
+                raise 'Такого номера нет в базе данных'
             session_id = Payment.objects.get(user_id=user.id).session_id
             session = stripe.checkout.Session.retrieve(
                     session_id,
