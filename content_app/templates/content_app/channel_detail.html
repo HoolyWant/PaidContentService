@@ -37,6 +37,11 @@
                         <a class="nav-link" href="{% url 'content_app:publication_detail' publication.id %}"> {{ publication.title }}</a>
                     </h2>
                     <p class="card-text"> {{ publication.content }}</p>
+                        {% if publication.is_free %}
+                        <p class="card-text"> FREE </p>
+                        {% else %}
+                        <p class="card-text"> $$$ </p>
+                        {% endif %}
                     {% if publication.image %}
                         <img src="/media/{{ publication.image }}" class="card-img-top" alt="Card image cap">
                     {% endif %}

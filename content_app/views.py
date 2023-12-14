@@ -8,12 +8,18 @@ from content_app.forms import ChannelForm
 from content_app.models import Publication, Channel, Subscription, Payment
 
 
-class PublicationView(LoginRequiredMixin, DetailView):
+class PublicationView(DetailView):
     model = Publication
+
+    def get_context_data(self, **kwargs):
+        context = super(PublicationView, self).get_context_data(**kwargs)
+        self.object = self.get_object()
+        context['channel'] = Channel.objects.get(id=self.object.channel_id)
+        return context
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
-        self.object.view_count += 1
+        self.object.views_count += 1
         self.object.save()
         return self.object
 
@@ -34,8 +40,20 @@ class ChannelList(ListView):
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         context = self.get_context_data()
-        context['owner'] = Channel.objects.get(owner_id=request.user.id)
+        context['owner'] = Channel.objects.filter(owner_id=request.user.id)
         return self.render_to_response(context)
+
+
+class SubChannelList(ListView):
+    model = Channel
+
+    def get_queryset(self):
+        user = self.request.user
+        channels_ids = [i['channel_id'] for i in list(Subscription.objects.filter(
+                                                                                  user_id=user.id
+                                                                                 ).values('channel_id'))]
+        queryset = Channel.objects.filter(id__in=channels_ids)
+        return queryset
 
 
 class ChannelCreate(CreateView):
@@ -96,19 +114,18 @@ class ChannelView(DetailView):
         return render(request, context)
 
 
-class PublicationDetail(DetailView):
-    model = Publication
-
-
 def sub_success(request):
     if request.method == 'GET':
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def home(request):
-    return render(request, 'content_app/home.html')
+    channels = Channel.objects.order_by('?')[:3]
+    publications = Publication.objects.filter(is_free=True).order_by('?')[:3]
+    context = {
+        'channels': channels,
+        'publications': publications
+    }
+    return render(request, 'content_app/home.html', context)
 
-
-def content_plus():
-    pass
 
