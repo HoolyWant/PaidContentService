@@ -10,7 +10,8 @@
         <p class="lead text-muted">{{ object.description }}</p>
           <p class="lead text-muted">Подписчики: {{ followers }}</p>
           <p class="lead text-muted">Публикации: {{ publications_count }}</p>
-          {% if not subscription %}
+            {% if user.id != object.owner_id%}
+          {% if not subscription and user.is_authenticated %}
                 <form method="post">
                     {% csrf_token %}
                     <input type="submit" class="btn btn-sm btn-primary btn-follow" value="Подписаться на канал" name="button">
@@ -20,6 +21,9 @@
                 {% csrf_token %}
                 <input type="submit" class="btn btn-sm btn-primary btn-follow" value="Отписаться от канала" name="button">
             </form>
+          {% else %}
+          <a href="{% url 'users:register' %}" class="btn btn-success btn-lg">Получить Plus</a>
+          {% endif %}
           {% endif %}
       </div>
     </div>
@@ -28,9 +32,12 @@
   <div class="album py-5 bg-light">
     <div class="container">
       <h1 class="fw-light">Лента</h1>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% if user.id == object.owner_id%}
+        <a href="{% url 'content_app:publication_create' %}" class="btn btn-success btn-lg">Создать публикацию</a>
+        {% endif %}
+        <div class="row g-3">
             {% for publication in publications %}
-                <div class="col-3">
+                <div class="col mb-5">
                 <div class="card" style="width: 50rem;">
                     <div class="card-body">
                     <h2>
@@ -45,6 +52,10 @@
                     {% if publication.image %}
                         <img src="/media/{{ publication.image }}" class="card-img-top" alt="Card image cap">
                     {% endif %}
+                        {% if user.id == publication.owner_id %}
+                        <a href="{% url 'content_app:publication_edit' publication.id %}" class="btn btn-outline-primary">Изменить</a>
+                        <a href="{% url 'content_app:publication_delete' publication.id %}" class="btn btn-outline-warning">УДалить</a>
+                        {% endif %}
                     <div class="card-footer">
                         {{ publication.made_at }}
                         <h6>Просмотры: {{ publication.views_count }}</h6>
@@ -52,8 +63,8 @@
                 </div>
                         </div>
                     </div>
-                </div>
             {% endfor %}
+                </div>
         </div>
         </div>
 {% endblock %}

@@ -13,6 +13,7 @@ class Channel(models.Model):
 
 
 class Publication(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='владелец', **NULLABLE)
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE, verbose_name='канал', **NULLABLE)
     title = models.CharField(max_length=150, verbose_name='название')
     content = models.TextField(verbose_name='текст')

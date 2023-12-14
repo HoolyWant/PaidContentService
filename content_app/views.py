@@ -2,10 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, request
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from content_app.forms import ChannelForm
-from content_app.models import Publication, Channel, Subscription, Payment
+from content_app.forms import ChannelForm, PublicationForm
+from content_app.models import Publication, Channel, Subscription
 
 
 class PublicationView(DetailView):
@@ -26,12 +26,29 @@ class PublicationView(DetailView):
 
 class PublicationCreate(LoginRequiredMixin, CreateView):
     model = Publication
+    form_class = PublicationForm
 
     def form_valid(self, form):
-        self.object = form.save()
-        self.object.user_id = self.request.user
-        self.object.save()
-        return super().form_valid(form)
+        if form.is_valid:
+            self.object = form.save()
+            self.object.owner_id = self.request.user.id
+            self.object.channel_id = Channel.objects.get(owner_id=self.object.owner_id).id
+            self.object.save()
+            return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('content_app:channel_list')
+
+
+class PublicationEdit(UpdateView):
+    model = Publication
+    form_class = PublicationForm
+    success_url = reverse_lazy('content_app:channel_list')
+
+
+class PublicationDelete(DeleteView):
+    model = Publication
+    success_url = reverse_lazy('content_app:channel_list')
 
 
 class ChannelList(ListView):
@@ -40,8 +57,11 @@ class ChannelList(ListView):
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         context = self.get_context_data()
-        context['owner'] = Channel.objects.filter(owner_id=request.user.id)
-        return self.render_to_response(context)
+        try:
+            context['owner'] = Channel.objects.get(owner_id=request.user.id)
+            return self.render_to_response(context)
+        except Channel.DoesNotExist:
+            return self.render_to_response(context)
 
 
 class SubChannelList(ListView):
@@ -62,10 +82,11 @@ class ChannelCreate(CreateView):
     success_url = reverse_lazy('content_app:channel_list')
 
     def form_valid(self, form):
-        self.object = form.save()
-        self.object.user_id = self.request.user
-        self.object.save()
-        return super().form_valid(form)
+        if form.is_valid:
+            self.object = form.save()
+            self.object.user_id = self.request.user.id
+            self.object.save()
+            return super().form_valid(form)
 
 
 class ChannelView(DetailView):

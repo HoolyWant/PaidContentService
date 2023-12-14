@@ -16,10 +16,9 @@ class ChannelForm(StyleFormMixin, forms.ModelForm):
         fields = ('title', 'description', 'image',)
 
 
-class PublicationForm(StyleFormMixin, forms.ModelForm):
+class PublicationForm(forms.ModelForm):
     class Meta:
         model = Publication
-        exclude = ('channel', 'made_at', 'views_count')
-
+        fields = ('title', 'content', 'image', 'is_free')
 
 

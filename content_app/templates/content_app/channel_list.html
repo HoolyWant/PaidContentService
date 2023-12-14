@@ -162,10 +162,14 @@
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Каналы</h1>
         <p class="lead text-muted"> Здесь вы можете найти интересные для вас каналы с бесплатным и платным контентом. Платный контент доступен только для пользователеq с подпиской Plus</p>
-        {% if not owner %}
+        {% if user.is_authenticated%}
+        {% if owner %}
         <p>
+          <a class="p-2 btn btn-dark btn-lg" href="{% url 'content_app:channel_view' owner.id%}">Мой канал</a>
+          {% else  %}
           <a href="{% url 'content_app:channel_create' %}" class="btn btn-outline-success btn-lg">Создать канал</a>
         </p>
+        {% endif %}
         {% endif %}
       </div>
     </div>
