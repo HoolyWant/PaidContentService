@@ -90,8 +90,9 @@ class ChannelCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         if form.is_valid:
             self.object = form.save()
-            self.object.user_id = self.request.user.id
+            self.object.owner = self.request.user
             self.object.save()
+            Subscription.objects.create(user_id=self.request.user.id, channel_id=self.object.id, subscription_status=True)
             return super().form_valid(form)
 
 

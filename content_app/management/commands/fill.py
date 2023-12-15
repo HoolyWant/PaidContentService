@@ -31,6 +31,7 @@ class Command(BaseCommand):
         for user in users_list:
             new_user = User.objects.create(**user)
             new_user.set_password('qwerty')
+            new_user.save()
             user_ids.append(new_user.id)
 
         channels_list = [

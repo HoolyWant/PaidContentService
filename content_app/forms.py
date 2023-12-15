@@ -11,6 +11,7 @@ class StyleFormMixin:
 
 
 class ChannelForm(StyleFormMixin, forms.ModelForm):
+    # image = forms.ImageField(attrs={'enctype="multipart/form-data"'}
     class Meta:
         model = Channel
         fields = ('title', 'description', 'image',)
