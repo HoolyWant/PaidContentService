@@ -59,3 +59,31 @@ class Command(BaseCommand):
                                     title=channel['title'],
                                     description=channel['description'])
             channels_ids.append(new_channel.id)
+
+        publications_list = [
+            {'owner': user_ids[0], 'channel': channels_ids[0], 'title': 'Тюльпаны',
+             'content': 'Так люблю тюльпаны', 'image': 'fill/flower.jpeg',
+             'is_free': True
+             },
+            {'owner': user_ids[1], 'channel': channels_ids[1], 'title': 'Лагер',
+             'content': 'Так люблю пиво', 'image': 'fill/beer.jpg',
+             'is_free': True
+             },
+            {'owner': user_ids[4], 'channel': channels_ids[4], 'title': 'Знакомьтесь, мой кот Олег',
+             'content': '', 'image': 'fill/cat.jpeg',
+             'is_free': True
+             },
+            {'owner': user_ids[2], 'channel': channels_ids[2], 'title': 'Рисунки только в платном разделе <3',
+             'content': '', 'image': '', 'is_free': True
+             },
+
+        ]
+        for publication in publications_list:
+            new_publication = Publication.objects.create(
+                owner=User.objects.get(pk=publication['owner']),
+                channel=Channel.objects.get(pk=publication['channel']),
+                title=publication['title'],
+                content=publication['content'],
+                is_free=publication['is_free'],
+                image=publication['image']
+            )

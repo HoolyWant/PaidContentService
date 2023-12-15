@@ -1,6 +1,7 @@
 import os
 
 import stripe
+from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -8,7 +9,7 @@ from django.views.generic import CreateView, TemplateView
 
 from content_app.models import Payment
 from content_app.services import create_product, create_price
-from users.forms import UserRegisterForm
+from users.forms import UserRegisterForm, UserLoginForm
 from users.models import User
 
 stripe.api_key = os.getenv('STRIPE_API_KEY')
@@ -76,6 +77,14 @@ class SuccessView(TemplateView):
 
 class CancelView(TemplateView):
     template_name = "cancel.html"
+
+
+class CustomLoginView(LoginView):
+    model = User
+    form_class = UserLoginForm
+
+    def get_success_url(self):
+        return reverse_lazy('content_app:home')
 
 
 

@@ -1,13 +1,17 @@
 {% extends 'content_app/base.html'%}
 
 {% block content %}
-
+<img src="/media/logo/header.png" class="card-img-top" alt="Card image cap">
   <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">{{ object.title }}</h1>
+          {% if object.image %}
           <img src="/media/{{ object.image }}" class="bd-placeholder-img rounded-circle" alt="Card image cap" width="140" height="140">
-        <p class="lead text-muted">{{ object.description }}</p>
+          {% else %}
+          <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/><text x="25%" y="50%" fill="#eceeef" dy=".3em">{{ object.title }}</text></svg>
+            {% endif %}
+          <p class="lead text-muted">{{ object.description }}</p>
           <p class="lead text-muted">Подписчики: {{ followers }}</p>
           <p class="lead text-muted">Публикации: {{ publications_count }}</p>
             {% if user.id != object.owner_id%}
