@@ -13,12 +13,14 @@ class Channel(models.Model):
 
 
 class Publication(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='владелец', **NULLABLE)
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE, verbose_name='канал', **NULLABLE)
-    title = models.CharField()
-    content = models.TextField()
+    title = models.CharField(max_length=150, verbose_name='название')
+    content = models.TextField(verbose_name='текст')
     image = models.ImageField(upload_to='publications/', verbose_name='изображение', **NULLABLE)
-    made_at = models.DateTimeField()
+    made_at = models.DateTimeField(auto_now_add=True, verbose_name='дата создания', **NULLABLE)
     views_count = models.IntegerField(default=0, verbose_name='кол-во просмотров', **NULLABLE)
+    is_free = models.BooleanField(default=True, verbose_name='бесплатный контент')
 
 
 class Subscription(models.Model):

@@ -4,7 +4,7 @@ from django.db import models
 
 class User(AbstractUser):
     username = None
-    phone_number = models.CharField(unique=True, verbose_name='номер телефона')
+    phone_number = models.CharField(max_length=11, unique=True, verbose_name='номер телефона')
     is_active = models.BooleanField(default=False, verbose_name='активен')
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = []

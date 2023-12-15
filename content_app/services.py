@@ -6,7 +6,7 @@ import os
 from django.core.mail import send_mail
 from dotenv import load_dotenv
 
-from config.settings import BASE_DIR, EMAIL_HOST_USER
+from config.settings import BASE_DIR
 
 
 def create_paymentintent(amount):
