@@ -11,7 +11,6 @@ class Command(BaseCommand):
             is_staff=True,
             is_superuser=True,
             is_active=True,
-            is_subscribed=False,
         )
         user.set_password('admin')
         user.save()

@@ -25,12 +25,15 @@ python manage.py makemigrations
 
 
     SECRET_KEY_DJANGO='your_personal_secret_key'
-    PASSWORD_DB='database_password'
-    NAME_DB='database_name'
-    LOCATION='location_for_redis'
+    POSTGRES_USER='postgres_user'
+    POSTGRES_PASSWORD='postgres_password'
+    POSTGRES_DB='database_name'
+    POSTGRES_HOST='postgres_host'
+    PG_DATA=/path
+    LOCATION='redis://host:port'
     CACHE_ENABLED='True'
     STRIPE_API_KEY='stripe_api_key'
-    YOUR_DOMAIN="your_domain"
+    YOUR_DOMAIN="http://host"
     TIME_ZONE='Zone/CityCenter'
 
 
@@ -44,6 +47,16 @@ python manage.py makemigrations
 Для остановки работы сервера используйте комбинацию клавиш Ctrl+C в окне терминала, где он был запущен.
 
 Для остановки работы сервера Redis используйте команду: sudo service redis-server stop 
+
+ПОКРЫТИЕ ТЕСТАМИ 78%
+
+Запуск тестирования через консоль:
+
+    python3 manage.py coverage users content_app
+
+Проверка покрытия тестами:
+
+    coverage report
 
 🐋 Docker: запуск
 Для запуска контейнеров в фоновом режиме выполните команду:
