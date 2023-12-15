@@ -53,7 +53,7 @@ class SuccessView(TemplateView):
             try:
                 user = User.objects.get(phone_number=phone_number)
             except Exception:
-                raise 'Такого номера нет в базе данных'
+                return redirect('users:cancel')
             session_id = Payment.objects.get(user_id=user.id).session_id
             session = stripe.checkout.Session.retrieve(
                     session_id,
