@@ -151,4 +151,6 @@ def home(request):
     return render(request, 'content_app/home.html', context)
 
 
-
+def sub_success(request):
+    if request.method == 'GET':
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

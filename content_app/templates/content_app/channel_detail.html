@@ -51,9 +51,7 @@
                         {% else %}
                         <p class="card-text"> $$$ </p>
                         {% endif %}
-                    {% if publication.image %}
-                        <img src="/media/{{ publication.image }}" class="card-img-top" alt="Card image cap">
-                    {% endif %}
+                        <img src="/media/{{ publication.image }}" class="card-img-top">
                         {% if user.id == publication.owner_id %}
                         <a href="{% url 'content_app:publication_edit' publication.id %}" class="btn btn-outline-primary">Изменить</a>
                         <a href="{% url 'content_app:publication_delete' publication.id %}" class="btn btn-outline-warning">УДалить</a>
