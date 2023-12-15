@@ -41,7 +41,13 @@ python manage.py makemigrations
 
 Получить API KEY можно на сайте с документацией https://stripe.com/docs/keys
 
+Команда для создания админа [createadmin](/users/management/commands/createadmin.py) (Номер телефона '1234', Пароль 'admin'):
 
+    python3 manage.py createadmin
+
+Команда для заполнения базы данных для демонстрации [fill](/content_app/management/commands/fill.py):
+
+    python3 manage.py fill
 
 Завершение работы
 Для остановки работы сервера используйте комбинацию клавиш Ctrl+C в окне терминала, где он был запущен.
