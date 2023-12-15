@@ -76,7 +76,8 @@ class SubChannelList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         channels_ids = [i['channel_id'] for i in list(Subscription.objects.filter(
-                                                                                  user_id=user.id
+                                                                                  user_id=user.id,
+                                                                                  subscription_status=True
                                                                                  ).values('channel_id'))]
         queryset = Channel.objects.filter(id__in=channels_ids)
         return queryset
